@@ -1,24 +1,27 @@
-
-
+R2D=180/pi; %Rad2Deg conversion
+RPM=30/pi; %Rad/sec to RPM conversion
 %% Drone properties 
-m=3.4811482949175; %Mass [kg]
-g=9.81; %Gravity [N/kg]
+m=3.4811482949175;      %Mass [kg]
+g=9.81;                 %Gravity [N/kg]
 
-Jx=0.082298105960482; %Inertia [Kg*m^2]
+Jx=0.082298105960482;   %Inertia [Kg*m^2]
 Jy=0.082457201628499;
 Jz=0.15887270137511;
 
-bp=20; %rotating damping coefficient
+bp=0.001; %rotating damping coefficient
 bq=0.001;
 br=0.001;
 
-cx=0.6; %translation damping coefficient
+cx=0.005; %translation damping coefficient
 cy=0.005;
-cz=0.1;
+cz=0.005;
 
 ts=1;  %Desired attitude settling time
 ts2=2; %Desired Position settling time
 tsz=2; %Desired altitude settling time
+
+roll_angle_limit=pi/6; %angle (in Rad) to which the drone can incline
+pitch_angle_limit=pi/6;
 
 %% Attitude ctrl (inner loop 5X faster)
 
@@ -123,6 +126,13 @@ Tcz=tsz/25;
 
 Kz=(m/Tcz)-cz;
 Kz2= m*((4/tsz))*((-4/tsz)+((cz+Kz)/m))/Kz;
+
+
+
+
+
+
+
 
 
 

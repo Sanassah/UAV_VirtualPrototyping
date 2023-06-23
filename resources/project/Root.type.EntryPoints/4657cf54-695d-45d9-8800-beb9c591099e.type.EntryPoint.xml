@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Info Type="StartUp" Visible="0" Icon="" File="main/Stinger.slx" Name="Stinger">
+    <Extension Value="582e1268-93d4-4252-899c-9713255e309f" Name="StartUpPrev" />
+</Info>
