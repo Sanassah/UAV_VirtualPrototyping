@@ -16,9 +16,9 @@ cx=0.005; %translation damping coefficient
 cy=0.005;
 cz=0.005;
 
-ts=0.1;  %Desired attitude settling time
-ts2=0.2; %Desired Position settling time
-tsz=0.2; %Desired altitude settling time
+ts=1;  %Desired attitude settling time
+ts2=2; %Desired Position settling time
+tsz=2; %Desired altitude settling time
 
 roll_angle_limit=pi/6; %angle (in Rad) to which the drone can incline
 pitch_angle_limit=pi/6;
