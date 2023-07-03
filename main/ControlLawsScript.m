@@ -8,13 +8,13 @@ Jx=0.082298105960482;   %Inertia [Kg*m^2]
 Jy=0.082457201628499;
 Jz=0.15887270137511;
 
-bp=0.001; %rotating damping coefficient
-bq=0.001;
-br=0.001;
+bp=0.000; %rotating drag coefficient
+bq=0.000;
+br=0.000;
 
-cx=0.005; %translation damping coefficient
-cy=0.005;
-cz=0.005;
+cx=0.000; %translation drag coefficient
+cy=0.000;
+cz=0.000;
 
 ts=1;  %Desired attitude settling time
 ts2=2; %Desired Position settling time
