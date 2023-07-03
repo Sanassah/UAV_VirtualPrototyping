@@ -16,8 +16,8 @@ cx=0.000; %translation drag coefficient
 cy=0.000;
 cz=0.000;
 
-ts=1;  %Desired attitude settling time
-ts2=2; %Desired Position settling time
+ts=2;  %Desired attitude settling time
+ts2=3; %Desired Position settling time
 tsz=2; %Desired altitude settling time
 
 roll_angle_limit=pi/6; %angle (in Rad) to which the drone can incline
