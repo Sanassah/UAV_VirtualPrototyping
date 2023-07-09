@@ -1,27 +1,33 @@
+clc; clear;
+
 R2D=180/pi; %Rad2Deg conversion
 RPM=30/pi; %Rad/sec to RPM conversion
 %% Drone properties 
-m=3.4811482949175;      %Mass [kg]
-g=9.80665;              %Gravity [N/kg]
+m=3; %Mass [kg]
+g=9.81; %Gravity [N/kg]
+L=0.3; %arm length [m]
+Jx=0.01; %Inertia [Kg*m^2]
+Jy=0.01;
+Jz=0.02;
 
-Jx=0.082298105960482;   %Inertia [Kg*m^2]
-Jy=0.082457201628499;
-Jz=0.15887270137511;
+bp=0.001; %rotating damping coefficient
+bq=0.001;
+br=0.001;
 
-bp=0.000; %rotating drag coefficient
-bq=0.000;
-br=0.000;
+cx=.00005; %translation damping coefficient
+cy=0.005;
+cz=3;
 
-cx=0.000; %translation drag coefficient
-cy=0.000;
-cz=0.000;
-
-ts=2;  %Desired attitude settling time
-ts2=3; %Desired Position settling time
+ts2=1; %Desired Position settling time
 tsz=2; %Desired altitude settling time
+ts=ts2/2;  %Desired attitude settling time
 
 roll_angle_limit=pi/6; %angle (in Rad) to which the drone can incline
 pitch_angle_limit=pi/6;
+yaw_angle_limit=pi/6;
+
+k_T=0.5; %Thrust coefficient of propellers
+k_y=0.5; %Yaw coefficient
 
 %% Attitude ctrl (inner loop 5X faster)
 
@@ -42,68 +48,66 @@ Kr2= Jz*((4/ts))*((-4/ts)+((br+Kr)/Jz))/Kr;
 
 %% Position ctrl (with zero placement)
 
-Tcxy=ts2/25; %5X faster inner loop.
-
 % X ctrl
-Kx1=((1/Tcxy)-cx)/g; %inner loop derivative cntrl
 
 alpha=-(bq+Kq)/(2*Jy);%for pole placement and clarity
 beta=((2*alpha)^2)-4*Kq2*Kq/Jy;
 
 p1=(alpha+(sqrt(beta))/2);%poles of 4th order Transfer function
 p2=(alpha-(sqrt(beta))/2);
-p3=-(cx+Kx1*g);
+p3=-cx;
 p4=0;
 
 
-t1=atan((-4/ts2)/(p1+(4/ts2))); %angles from poles to target poles
-t2=atan((-4/ts2)/(p2+(4/ts2)));
-t3=atan((-4/ts2)/(p3+(4/ts2)));
+t1=atan((4/ts2)/(p1+(4/ts2))); %angles from poles to target poles
+t2=atan((4/ts2)/(p2+(4/ts2)));
+t3=atan((4/ts2)/(p3+(4/ts2)));
 t4=3*pi/4;
 
-z_x=4*(1+(1/(tan(t1+t2+t3-pi/4))))/ts2; %Zero placement for desired reponse
-tz=atan((-4/ts2)/(-z_x+(4/ts2))); %angle from zero to target pole
+z_x=cx; %Zero placement for desired reponse~~Warnings: if zero is placed at the first target pole, we end up having 2 poles and a zero on the same point
+                                             %in the real world it might not be as accurate but it will still be stable around the pole 
+tz=atan((4/ts2)/(-z_x+(4/ts2))); %angle from zero to target pole
 
-l1=(p1+(4/ts2))/(cos(t1)); %lengths from poles/zero to target 
+l1=(p1+(4/ts2))/(cos(t1)); %lengths from poles/zero to targets 
 l2=(p2+(4/ts2))/(cos(t2));
 l3=(p3+(4/ts2))/(cos(t3));
 l4=(p4+(4/ts2))/(cos(t4));
 lz=(-z_x+(4/ts2))/(cos(tz));
 
 
-Kx2=l1*l2*l3*l4/((Kq*Kq2*g*Kx1/Jy)*lz); %prod of pole lengths divided prod of zero lengths
+Kx2=l1*l2*l3*l4/((Kq*Kq2*g/Jy)*lz); %prod of pole lengths divided prod of zero lengths
 Kx2=abs(Kx2);
+
 
 % %root locus check
 Pxs=[p1 p2 p3 p4];
  
- a=cx+Kx1*g;
+ a=cx;%computing simplicity
  b=(bq+Kq)/Jy;
  c=Kq*Kq2/Jy;
  
-%sys = tf([c*Kx1*g],[1 (a+b) (a*b+c) (a*c) 0]);
+%sys = tf([c*g],[1 (a+b) (a*b+c) (a*c) 0]);
 %rlocus(sys) % X RL w/ zero
-%sys = tf([c*Kx1*g z_x*c*Kx1*g],[1 (a+b) (a*b+c) (a*c) 0]);
-%rlocus(sys) % X RL w zero
+sys = tf([c*g z_x*c*g],[1 (a+b) (a*b+c) (a*c) 0]);
+rlocus(sys) % X RL w zero
 
 % Y ctrl
-Ky1=((1/Tcxy)-cy)/g;
 
 alpha_y=-(bp+Kp)/(2*Jx);
 beta_y=((2*alpha_y)^2)-4*Kp2*Kp/Jx;
 
 py_1=(alpha_y+(sqrt(beta_y))/2);
 py_2=(alpha_y-(sqrt(beta_y))/2);
-py_3=-(cy+Ky1*g);
+py_3=-cy;
 py_4=0;
 
-ty_1=atan((-4/ts2)/(py_1+(4/ts2)));
-ty_2=atan((-4/ts2)/(py_2+(4/ts2)));
-ty_3=atan((-4/ts2)/(py_3+(4/ts2)));
+ty_1=atan((4/ts2)/(py_1+(4/ts2)));
+ty_2=atan((4/ts2)/(py_2+(4/ts2)));
+ty_3=atan((4/ts2)/(py_3+(4/ts2)));
 ty_4=3*pi/4;
 
-z_y=4*(1+(1/(tan(ty_1+ty_2+ty_3-pi/4))))/ts2;
-ty_z=atan((-4/ts2)/(-z_y+(4/ts2)));
+z_y=cy;
+ty_z=atan((4/ts2)/(-z_y+(4/ts2)));
 
 ly_1=(py_1+(4/ts2))/(cos(ty_1));
 ly_2=(py_2+(4/ts2))/(cos(ty_2));
@@ -111,7 +115,7 @@ ly_3=(py_3+(4/ts2))/(cos(ty_3));
 ly_4=(py_4+(4/ts2))/(cos(ty_4));
 ly_z=(-z_y+(4/ts2))/(cos(ty_z));
 
-Ky2=ly_1*ly_2*ly_3*ly_4/((Ky1*Kp*Kp2*g/Jx)*ly_z); 
+Ky2=ly_1*ly_2*ly_3*ly_4/((Kp*Kp2*g/Jx)*ly_z); 
 Ky2=abs(Ky2);
 
 %Root locus check
@@ -126,15 +130,3 @@ Tcz=tsz/25;
 
 Kz=(m/Tcz)-cz;
 Kz2= m*((4/tsz))*((-4/tsz)+((cz+Kz)/m))/Kz;
-
-
-
-
-
-
-
-
-
-
-
-
