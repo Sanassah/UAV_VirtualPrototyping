@@ -89,7 +89,7 @@ Pxs=[p1 p2 p3 p4];
 %sys = tf([c*g],[1 (a+b) (a*b+c) (a*c) 0]);
 %rlocus(sys) % X RL w/ zero
 sys = tf([c*g z_x*c*g],[1 (a+b) (a*b+c) (a*c) 0]);
-rlocus(sys) % X RL w zero
+%rlocus(sys); % X RL w zero
 
 % Y ctrl
 
