@@ -5,29 +5,37 @@ RPM=30/pi; %Rad/sec to RPM conversion
 %% Drone properties 
 m=3; %Mass [kg]
 g=9.81; %Gravity [N/kg]
-L=0.3; %arm length [m]
+L=0.4; %arm length [m]
 Jx=0.01; %Inertia [Kg*m^2]
 Jy=0.01;
 Jz=0.02;
 
-bp=0.001; %rotating damping coefficient
+bp=0.001; %rotating drag coefficient
 bq=0.001;
 br=0.001;
 
-cx=.00005; %translation damping coefficient
-cy=0.005;
-cz=3;
+cx=5; %translation drag coefficient
+cy=5;
+cz=5;
 
 ts2=1; %Desired Position settling time
-tsz=2; %Desired altitude settling time
+tsz=1; %Desired altitude settling time
 ts=ts2/2;  %Desired attitude settling time
+
+k_T=0.0000134; %Thrust coefficient of propellers
+k_y=0.000004; %Yaw coefficient
 
 roll_angle_limit=pi/6; %angle (in Rad) to which the drone can incline
 pitch_angle_limit=pi/6;
 yaw_angle_limit=pi/6;
 
-k_T=0.5; %Thrust coefficient of propellers
-k_y=0.5; %Yaw coefficient
+max_rpm=10000*2*pi/60; %Max rpm of rotors in Rad/s
+max_thrust=6*k_T*(max_rpm)^2;
+
+max_pitch_moment=sqrt(3)*k_T*L*(max_rpm)^2; %Max vehicle torque
+max_roll_moment=2*k_T*L*(max_rpm)^2;
+max_yaw_moment=3*k_y*(max_rpm)^2;
+
 
 %% Attitude ctrl (inner loop 5X faster)
 
@@ -50,7 +58,7 @@ Kr2= Jz*((4/ts))*((-4/ts)+((br+Kr)/Jz))/Kr;
 
 % X ctrl
 
-alpha=-(bq+Kq)/(2*Jy);%for pole placement and clarity
+alpha=-(bq+Kq)/(2*Jy);%for pole placement and computing clarity
 beta=((2*alpha)^2)-4*Kq2*Kq/Jy;
 
 p1=(alpha+(sqrt(beta))/2);%poles of 4th order Transfer function
@@ -75,8 +83,9 @@ l4=(p4+(4/ts2))/(cos(t4));
 lz=(-z_x+(4/ts2))/(cos(tz));
 
 
-Kx2=l1*l2*l3*l4/((Kq*Kq2*g/Jy)*lz); %prod of pole lengths divided prod of zero lengths
-Kx2=abs(Kx2);
+%Kx2=l1*l2*l3*l4/((Kq*Kq2*g/Jy)*lz); %prod of pole lengths divided prod of zero lengths
+Kx= (p1+4/ts2)*(p2+4/ts2)*(p4+4/ts2)/(Kq*Kq2*g/Jy)
+Kx=abs(Kx)
 
 
 % %root locus check
@@ -85,11 +94,14 @@ Pxs=[p1 p2 p3 p4];
  a=cx;%computing simplicity
  b=(bq+Kq)/Jy;
  c=Kq*Kq2/Jy;
- 
+
+
+
 %sys = tf([c*g],[1 (a+b) (a*b+c) (a*c) 0]);
-%rlocus(sys) % X RL w/ zero
+% X RL w/ zero
 sys = tf([c*g z_x*c*g],[1 (a+b) (a*b+c) (a*c) 0]);
-%rlocus(sys); % X RL w zero
+% X RL w zero
+rlocus(sys); % X RL w zero
 
 % Y ctrl
 
@@ -115,8 +127,8 @@ ly_3=(py_3+(4/ts2))/(cos(ty_3));
 ly_4=(py_4+(4/ts2))/(cos(ty_4));
 ly_z=(-z_y+(4/ts2))/(cos(ty_z));
 
-Ky2=ly_1*ly_2*ly_3*ly_4/((Kp*Kp2*g/Jx)*ly_z); 
-Ky2=abs(Ky2);
+Ky=ly_1*ly_2*ly_3*ly_4/((Kp*Kp2*g/Jx)*ly_z); 
+Ky=abs(Ky);
 
 %Root locus check
 Pys=[py_1 py_2 py_3 py_4];
@@ -130,3 +142,33 @@ Tcz=tsz/25;
 
 Kz=(m/Tcz)-cz;
 Kz2= m*((4/tsz))*((-4/tsz)+((cz+Kz)/m))/Kz;
+
+%% Control allocation (From inputs to propeller speed)
+
+% U = C_A * W_i^2 
+
+C_A =[     k_T           k_T          k_T                k_T          k_T         k_T;
+     -k_T*L*sqrt(3)/2     0     k_T*L*sqrt(3)/2    k_T*L*sqrt(3)/2     0     -k_T*L*sqrt(3)/2;
+         k_T*L/2        k_T*L       k_T*L/2           -k_T*L/2      -k_T*L       -k_T*L/2;
+          -k_y          k_y         -k_y                k_y         -k_y          k_y];
+
+
+B=pinv(C_A);%Pseudoinverse of control allocation matrix
+
+% B * U = W_i^2
+
+%% Reliability of each rotors
+R1=0.5;
+R2=1;
+R3=1;
+R4=1;
+R5=1;
+R6=1;
+
+
+
+
+
+
+
+
