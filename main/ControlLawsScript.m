@@ -3,12 +3,13 @@ clc; clear;
 R2D=180/pi; %Rad2Deg conversion
 RPM=30/pi; %Rad/sec to RPM conversion
 %% Drone properties 
-m=3; %Mass [kg]
-g=9.81; %Gravity [N/kg]
-L=0.4; %arm length [m]
-Jx=0.01; %Inertia [Kg*m^2]
-Jy=0.01;
-Jz=0.02;
+m=3.4811482949175;      %Mass [kg]
+g=9.80665;              %Gravity [N/kg]
+L=0.4;
+
+Jx=0.082298105960482;   %Inertia [Kg*m^2]
+Jy=0.082457201628499;
+Jz=0.15887270137511;
 
 bp=0.001; %rotating drag coefficient
 bq=0.001;
@@ -84,8 +85,8 @@ lz=(-z_x+(4/ts2))/(cos(tz));
 
 
 %Kx2=l1*l2*l3*l4/((Kq*Kq2*g/Jy)*lz); %prod of pole lengths divided prod of zero lengths
-Kx= (p1+4/ts2)*(p2+4/ts2)*(p4+4/ts2)/(Kq*Kq2*g/Jy)
-Kx=abs(Kx)
+Kx= (p1+4/ts2)*(p2+4/ts2)*(p4+4/ts2)/(Kq*Kq2*g/Jy);
+Kx=abs(Kx);
 
 
 % %root locus check
@@ -101,7 +102,7 @@ Pxs=[p1 p2 p3 p4];
 % X RL w/ zero
 sys = tf([c*g z_x*c*g],[1 (a+b) (a*b+c) (a*c) 0]);
 % X RL w zero
-rlocus(sys); % X RL w zero
+%rlocus(sys); % X RL w zero
 
 % Y ctrl
 
@@ -127,7 +128,8 @@ ly_3=(py_3+(4/ts2))/(cos(ty_3));
 ly_4=(py_4+(4/ts2))/(cos(ty_4));
 ly_z=(-z_y+(4/ts2))/(cos(ty_z));
 
-Ky=ly_1*ly_2*ly_3*ly_4/((Kp*Kp2*g/Jx)*ly_z); 
+%Ky=ly_1*ly_2*ly_3*ly_4/((Kp*Kp2*g/Jx)*ly_z); 
+Ky= (py_1+4/ts2)*(py_2+4/ts2)*(py_4+4/ts2)/(Kp*Kp2*g/Jx);
 Ky=abs(Ky);
 
 %Root locus check
