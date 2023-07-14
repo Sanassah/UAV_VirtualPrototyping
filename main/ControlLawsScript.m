@@ -24,18 +24,18 @@ tsz=1; %Desired altitude settling time
 ts=ts2/2;  %Desired attitude settling time
 
 k_T=0.0000134; %Thrust coefficient of propellers
-k_y=0.000004; %Yaw coefficient
+k_y=0.001058; %Yaw coefficient
 
 roll_angle_limit=pi/6; %angle (in Rad) to which the drone can incline
 pitch_angle_limit=pi/6;
 yaw_angle_limit=pi/6;
 
-max_rpm=10000*2*pi/60; %Max rpm of rotors in Rad/s
-max_thrust=6*k_T*(max_rpm)^2;
+max_rotorspeed=10000*2*pi/60; %Max rpm of rotors in Rad/s
+max_thrust=6*k_T*(max_rotorspeed)^2;
 
-max_pitch_moment=sqrt(3)*k_T*L*(max_rpm)^2; %Max vehicle torque
-max_roll_moment=2*k_T*L*(max_rpm)^2;
-max_yaw_moment=3*k_y*(max_rpm)^2;
+max_pitch_moment=sqrt(3)*k_T*L*(max_rotorspeed)^2; %Max vehicle torque
+max_roll_moment=2*k_T*L*(max_rotorspeed)^2;
+max_yaw_moment=3*k_y*(max_rotorspeed)^2;
 
 
 %% Attitude ctrl (inner loop 5X faster)
