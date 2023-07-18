@@ -19,12 +19,12 @@ cx=5; %translation drag coefficient
 cy=5;
 cz=5;
 
-ts2=1; %Desired Position settling time
-tsz=1; %Desired altitude settling time
-ts=ts2/2;  %Desired attitude settling time
+ts2=2; %Desired Position settling time
+tsz=2; %Desired altitude settling time
+ts=2;  %Desired attitude settling time
 
 k_T=0.0000134; %Thrust coefficient of propellers
-k_y=0.001058; %Yaw coefficient
+k_y=2.28e-6; %Yaw coefficient 1.5925e-06;
 
 roll_angle_limit=pi/6; %angle (in Rad) to which the drone can incline
 pitch_angle_limit=pi/6;
