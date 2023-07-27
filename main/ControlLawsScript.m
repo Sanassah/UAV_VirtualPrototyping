@@ -22,6 +22,10 @@ cx=5; %translation drag coefficient
 cy=5;
 cz=5;
 
+cdx=cx*m; %Effective damping coefficient
+cdy=cy*m;
+cdz=cz*m;
+
 ts2=1; %Desired Position settling time
 tsz=2; %Desired altitude settling time
 ts=ts2/2;  %Desired attitude settling time  
@@ -29,9 +33,8 @@ tsy=ts; %Desired yaw settling time
 
 
 
-roll_angle_limit=20/R2D; %angle (in Rad) to which the drone can incline
-pitch_angle_limit=20/R2D;
-yaw_angle_limit=20/R2D;
+roll_angle_limit=32/R2D; %angle (in Rad) to which the drone can incline
+pitch_angle_limit=32/R2D;
 
 max_rpm=10000/RPM; %Max rpm of rotors in Rad/s
 hov_rpm=6200/RPM; %prop speed while hovering in Rad/s
@@ -88,7 +91,7 @@ l4=(p4+(4/ts2))/(cos(t4));
 lz=(-z_x+(4/ts2))/(cos(tz));
 
 
-Kx=l1*l2*l3*l4/((Kq*Kq2*g/Jy)*lz); %prod of pole lengths divided prod of zero lengths
+Kx=l1*l2*l3*l4/((Kq*Kq2*g/Jy)*lz); %prod of pole lengths divided prod of zero lengths 
 %Kx= (p1+4/ts2)*(p2+4/ts2)*(p4+4/ts2)/(Kq*Kq2*g/Jy);
 Kx=abs(Kx);
 
@@ -106,7 +109,7 @@ Pxs=[p1 p2 p3 p4];
 % X RL w/ zero
 sys = tf([c*g z_x*c*g],[1 (a+b) (a*b+c) (a*c) 0]);
 % X RL w zero
-rlocus(sys) 
+%rlocus(sys) 
 
 % Y ctrl
 
