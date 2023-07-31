@@ -1,7 +1,7 @@
 clc; clear;
 
 R2D=180/pi; %Rad2Deg conversion
-RPM=30/pi; %Rad/sec to RPM conversion
+RPM_Conversion=30/pi; %Rad/sec to RPM conversion
 %% Drone properties 
 m=3.4811482949175;      %Mass [kg]
 g=9.80665;              %Gravity [N/kg]
@@ -36,8 +36,8 @@ tsy=ts; %Desired yaw settling time
 roll_angle_limit=32/R2D; %angle (in Rad) to which the drone can incline
 pitch_angle_limit=32/R2D;
 
-max_rpm=10000/RPM; %Max rpm of rotors in Rad/s
-hov_rpm=6200/RPM; %prop speed while hovering in Rad/s
+max_rpm=10000/RPM_Conversion; %Max rpm of rotors in Rad/s
+hov_rpm=6200/RPM_Conversion; %prop speed while hovering in Rad/s
 hov_thrust=6*k_T*(hov_rpm)^2; %thrust while hovering
 max_thrust=6*k_T*(max_rpm)^2; %Max thrust
 max_pitch_moment=sqrt(3)*k_T*L*(max_rpm)^2; %Max vehicle torque
@@ -159,7 +159,7 @@ Kz2= m*((4/tsz))*((-4/tsz)+((cz+Kz)/m))/Kz;
 C_A =[     k_T           k_T          k_T                k_T          k_T         k_T;
      -k_T*L*sqrt(3)/2     0     k_T*L*sqrt(3)/2    k_T*L*sqrt(3)/2     0     -k_T*L*sqrt(3)/2;
          k_T*L/2        k_T*L       k_T*L/2           -k_T*L/2      -k_T*L       -k_T*L/2;
-          -k_y          k_y         -k_y                k_y         -k_y          k_y];
+          +k_y          -k_y         +k_y                -k_y         +k_y          -k_y];
 
 
 B=pinv(C_A);%Pseudoinverse of control allocation matrix
@@ -168,10 +168,10 @@ B=pinv(C_A);%Pseudoinverse of control allocation matrix
 
 %% Reliability of each rotors
 R1=1;
-R2=0.5;
+R2=1;
 R3=1;
 R4=1;
-R5=0.5;
+R5=1;
 R6=1;
 
 
