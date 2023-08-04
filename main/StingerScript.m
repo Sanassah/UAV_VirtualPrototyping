@@ -10,7 +10,7 @@ Wmax = 13000; % Maximum Motor Speed (rpm)
 Imax = 28.9; % Maximum Motor Current (A)
 Ic = 0.742; % Motor no load current (A)
 Vc = 3; % DC supply voltage when no-load current (V)
-freq = 30; %pwm frequency
+freq = 10; %pwm frequency
 Samp_time = 1e-3; %pwm samp time
 
 %% Voltage to Torque to Current to Motor Angular speed Transfer Functions K's
