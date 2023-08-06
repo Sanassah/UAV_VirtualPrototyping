@@ -12,7 +12,7 @@ Jy=0.082457201628499;
 Jz=0.15887270137511;
 
 k_T=1.34e-5; %Thrust coefficient of propellers
-k_y=1.28e-7; %Yaw coefficient of propellers
+k_y=2.28e-7; %Yaw coefficient of propellers
 
 bp=0.001; %rotating drag coefficient
 bq=0.001;

@@ -246,3 +246,7 @@ T_amb_mot = 1;
 C_mot = 1;
 
 k_b = 1; %1.38*10^-23;
+
+bBNG = 1;
+RrefBNG = 1;
+t_D_SCTDDB = 1;
