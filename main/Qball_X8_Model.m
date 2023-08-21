@@ -250,3 +250,7 @@ k_b = 1; %1.38*10^-23;
 bBNG = 1;
 RrefBNG = 1;
 t_D_SCTDDB = 1;
+
+Vref_TDDBCAP = 1;
+
+InDamTDDBCAP = 1;
