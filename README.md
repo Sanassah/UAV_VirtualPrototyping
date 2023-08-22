@@ -16,25 +16,20 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 
 ### Prerequisites
 
-To run the hexacopter simulation, you need to have MATLAB installed on your system. Additionally, ensure that you have the necessary MATLAB toolboxes for control systems and simulations.
+1. MATLAB 2020a
+2. 
+
 
 ### Installation
 
-1. Clone the repository to your local machine using the following command:
+1. Download the main repository
 
 2. Open MATLAB and navigate to the cloned repository folder.
 
-3. Open the main simulation script, `hexacopter_simulation.m`, in MATLAB.
+3. Open the project simulation file, `UAV_VirtualPrototyping.prj`, in MATLAB.
 
-4. Modify the simulation parameters and control laws as per your requirements.
+4. Enter a flight plan in the popup app and run the project
 
-5. Run the script to start the hexacopter simulation.
-
-## Usage
-
-The `hexacopter_simulation.m` script serves as the entry point for the simulation. You can modify the script to set up the simulation environment, define initial conditions, and choose the desired control laws.
-
-Once the simulation is running, you can visualize the hexacopter's motion and analyze its behavior using the provided MATLAB plotting functions. You can also collect data for further analysis or performance evaluation.
 
 ## Contributing
 
