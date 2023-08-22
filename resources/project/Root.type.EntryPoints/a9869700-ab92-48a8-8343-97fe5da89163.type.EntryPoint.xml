@@ -1,0 +1,4 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<Info Type="StartUp" Visible="0" Icon="" File="main/MissionPlannerStartup.m" Name="MissionPlannerStartup">
+    <Extension Value="0ac95042-48e6-41db-a998-f19d5d61fad7" Name="StartUpPrev" />
+</Info>
