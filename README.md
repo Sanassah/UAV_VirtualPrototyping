@@ -9,6 +9,8 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 - Control Allocation: The project incorporates a control allocation algorithm that efficiently distributes control commands to the individual actuators of the hexacopter. This allows for precise control and maneuverability.
 
 - Control Laws: Various control laws have been implemented to govern the hexacopter's behavior. These laws include PID control, trajectory tracking, altitude control, and more. You can experiment with different control laws or even create your own to achieve desired flight characteristics.
+- 
+- Reliability Model: Allows a different distribution of power to each motor depending on their health.
 
 ## Getting Started
 
