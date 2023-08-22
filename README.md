@@ -17,7 +17,10 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 ### Prerequisites
 
 1. MATLAB 2020a
-2. 
+2. Simscape Add-On
+3. Simscape Multibody Add-On
+4. Simscape Electrical Add-On
+5. Simscape Driveline Add-On
 
 
 ### Installation
