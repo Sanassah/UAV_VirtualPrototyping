@@ -16,19 +16,19 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 
 ### Prerequisites
 
-1. MATLAB 2020a
-2. Simscape Add-On
-3. Simscape Multibody Add-On
-4. Simscape Electrical Add-On
-5. Simscape Driveline Add-On
+1. MATLAB 2020a (Available in all labs of Concordia University)
+2. Simscape Add-On (Available in Concordia University, Dr. Jonathan Liscouet Lab)
+3. Simscape Multibody Add-On (Available in Concordia University, Dr. Jonathan Liscouet Lab)
+4. Simscape Electrical Add-On (Available in Concordia University EV building 8th floor labs)
+5. Simscape Driveline Add-On (Available in Concordia University, Dr. Jonathan Liscouet Lab)
 
 
 ### Installation
 
 1. Download the main repository
 
-2. Open MATLAB and navigate to the cloned repository folder.
-
+2. Open MATLAB 2020a or newer version and navigate to the cloned repository folder.
+   
 3. Open the project simulation file, `UAV_VirtualPrototyping.prj`, in MATLAB.
 
 4. Enter a flight plan in the popup app and run the project
