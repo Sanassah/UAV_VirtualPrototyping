@@ -195,7 +195,7 @@ bconst = 1.2; %arbitrarily because outside scope of project
 
 %Electrolyte vaporisation for capacitor
 nEVCAP = 1; % value of 0 for axial capacitor and 1 for radial capacitor
-LnomEVCAP = 3000*3600; % nominal capacitor lifetime for EVCAP (hours)
+LnomEVCAP = 3000; % nominal capacitor lifetime for EVCAP (hours)
 VnomEVCAP = 35; % nominal voltage (volt)
 VmaxEVCAP = 35; % same as nominal voltage (volts)
 EaEVCAP = 0.94; % activation energy (electronvolts)
@@ -218,16 +218,16 @@ EaTDDBSC = 0.7; % activation energy (electronvolts)
 TrefTDDBSC = 150; % reference temperature (celcius)
 RrefTDDBSC = 0.37; % reference reliability (assumption)
 bTDDBSC = 1.1; % weibull shape factor (assumption)
-LnomTDDBSC = 2777*3600; % nominal capacitor lifetime for Semiconductor (hours)
-EalphaTDDBSC = 0.7; % electric field strength (volts/meter)
+LnomTDDBSC = 2777; % nominal capacitor lifetime for Semiconductor (hours)
+EalphaTDDBSC = 700000000; % electric field strength (volts/meter)
 alpha1TDDBSC = 0.7; % value for silicon carbide molecule but we are using silicon dioxyde
 
 % Winding 
 EaWDG = 0.5; % activation energy (electronvolts)
-TrefWDG = 40; %reference temperature
+TrefWDG = 3.142e-5; %reference aging 
 RrefWDG = 0.98; %reference reliability
 bWDG = 1.1; %need to confirm with dr. liscouet
-LnomWDG = 20000*3600; % nominal winding lifetime(hours)
+LnomWDG = 20000; % nominal winding lifetime(hours)
 
 R_th_esc = 5.14; %esc thermoresistance (degrees celcius per watt)
 T_amb = 20; % ambient temperature (degrees celcius)
@@ -242,21 +242,22 @@ C_mot = 17.46; % thermal capacitor resistance (jules per kelvin)
 
 k_b = 1.38*e-23; % boltzmann constant
 
-bBNG = 1.2; % weibull shape factor for the bearing
-RrefBNG = 0.9; % reference reliability bbearing
-t_D_SCTDDB = 30; %thickness of the gate oxide
+bBNG = 1.2; % wuibull shape factor for the bearing
+RrefBNG = 0.5;
+t_D_SCTDDB = 0.5;
 
+InDamTDDBCAP = 0.5;
 
 %% Initial conditions for reliability 
 
 %Reliability Observer (CAPEV)
 
-CAPEV_Motor1 = 1;
-CAPEV_Motor2 = 1;
-CAPEV_Motor3 = 1;
-CAPEV_Motor4 = 1;
-CAPEV_Motor5 = 1;
-CAPEV_Motor6 = 1;
+CAPEV_Motor1 = 0.1;
+CAPEV_Motor2 = 0.1;
+CAPEV_Motor3 = 0.1;
+CAPEV_Motor4 = 0.1;
+CAPEV_Motor5 = 0.1;
+CAPEV_Motor6 = 0.1;
 
 %Reliability Observer (SCTDDB)
 
