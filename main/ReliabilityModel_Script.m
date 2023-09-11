@@ -249,23 +249,27 @@ t_D_SCTDDB = 30; %thickness of the gate oxide
 
 %% Initial conditions for reliability 
 
+%Battery Initial Condition
+In_SOC_Bat1 = 1;
+In_SOC_Bat2 = 1;
+
 %Reliability Observer (CAPEV)
 
-CAPEV_Motor1 = 1;
-CAPEV_Motor2 = 1;
-CAPEV_Motor3 = 1;
-CAPEV_Motor4 = 1;
-CAPEV_Motor5 = 1;
-CAPEV_Motor6 = 1;
+CAPEV_Motor1 = 0.5;
+CAPEV_Motor2 = 0.5;
+CAPEV_Motor3 = 0.5;
+CAPEV_Motor4 = 0.5;
+CAPEV_Motor5 = 0.5;
+CAPEV_Motor6 = 0.5;
 
 %Reliability Observer (SCTDDB)
 
-SCTDDB_Motor1 = 1;
-SCTDDB_Motor2 = 1;
-SCTDDB_Motor3 = 1;
-SCTDDB_Motor4 = 1;
-SCTDDB_Motor5 = 1;
-SCTDDB_Motor6 = 1;
+SCTDDB_Motor1 = 0.5;
+SCTDDB_Motor2 = 0.5;
+SCTDDB_Motor3 = 0.5;
+SCTDDB_Motor4 = 0.5;
+SCTDDB_Motor5 = 0.5;
+SCTDDB_Motor6 = 0.5;
 
 %Reliability Observer (SCEM)
 
