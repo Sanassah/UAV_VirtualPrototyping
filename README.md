@@ -20,7 +20,6 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 2. Simscape Add-On (Available in Concordia University, Dr. Jonathan Liscouet Lab)
 3. Simscape Multibody Add-On (Available in Concordia University, Dr. Jonathan Liscouet Lab)
 4. Simscape Electrical Add-On (Available in Concordia University EV building 8th floor labs)
-5. Simscape Driveline Add-On (Available in Concordia University, Dr. Jonathan Liscouet Lab)
 
 
 ### Installation
