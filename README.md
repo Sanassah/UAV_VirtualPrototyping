@@ -33,10 +33,6 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 4. Enter a flight plan in the popup app and run the project
 
 
-## Contributing
-
-Contributions to this hexacopter simulation project are welcome! If you find any bugs or have ideas for improvements, please submit an issue or pull request. Make sure to follow the established code style and provide clear documentation for any changes you propose.
-
 
 For any questions or inquiries, feel free to reach out to anas.senouci@gmail.com
 
