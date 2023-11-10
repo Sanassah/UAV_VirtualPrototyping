@@ -1,4 +1,4 @@
-
+RPM=30/pi; %Rad/sec to RPM conversion
 R2D=180/pi; %Rad2Deg conversion
 RPM_Conversion=30/pi; %Rad/sec to RPM conversion
 %% Drone properties 
