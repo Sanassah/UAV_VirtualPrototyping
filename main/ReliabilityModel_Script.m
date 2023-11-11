@@ -4,84 +4,84 @@
 %               The main purpose of the code is to define the dynamic model
 %               of the UAV being used as a testbed for the control
 %               allocation algorithm.
-%% Drone Dynamic Modeling
-
-%%% Constant Parameters %%%
-dt = 0.001; % sample time (s)
-m = 1.45; % uav mass (kg)
-mpayload = 0; % payload mass (kg)
-plarm = 0; % payload moment arm (m)
-k = 120; % propeller thrust to speed gain
-l = 0.2; % propeller moment arm (m)
-kyaw = 0.5; % propeller torque to speed constant
-alpha = 1; % reliability adaptation rate
-g = 9.87; % acceleration due to gravity (m/s2)
-Jxx = 0.03; % moment of inertia about x-axis
-Jyy = 0.03; % moment of inertia about y-axis
-Jzz = 0.04; % moment of inertia about z-axis
-kdrag = 5; % drag coefficient (assumed to be the same for all planes)
-
-%%% Offset CG model %%%
-cgoffset = l/2; % CG offset from geometric centre in the -z direction (m)
-A = [0 0 0 0 0 0 1 0 0 0 0 0; % state matrix
-     0 0 0 0 0 0 0 1 0 0 0 0;
-     0 0 0 0 0 0 0 0 1 0 0 0;
-     0 0 0 0 0 0 0 0 0 1 0 0;
-     0 0 0 0 0 0 0 0 0 0 1 0;
-     0 0 0 0 0 0 0 0 0 0 0 1;
-     0 0 0 g 0 0 0 0 0 0 0 0;
-     0 0 0 0 -g 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 -m*g*cgoffset/Jyy 0 0 0 0 0 0 0 0;
-     0 0 0 0 -m*g*cgoffset/Jxx 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0];
-B = [0 0 0 0; % control matrix for controllable variables
-     0 0 0 0;
-     0 0 0 0;
-     0 0 0 0;
-     0 0 0 0;
-     0 0 0 0;
-     0 0 0 0;
-     0 0 0 0;
-     1/m 0 0 0;
-     0 1/Jyy 0 0;
-     0 0 1/Jxx 0;
-     0 0 0 1/Jzz];
-C = [0 0 0 0 0 0 1 0 0 0 0 0; % output matrix
-     0 0 0 0 0 0 0 1 0 0 0 0;
-     0 0 0 0 0 0 0 0 1 0 0 0;
-     0 0 0 0 0 0 0 0 0 1 0 0;
-     0 0 0 0 0 0 0 0 0 0 1 0;
-     0 0 0 0 0 0 0 0 0 0 0 1];
-D = zeros(6,8); % output control matrix
-
-%%% Drag Addition %%%
-A = A + [0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 -kdrag/m 0 0 0 0 0;
-     0 0 0 0 0 0 0 -kdrag/m 0 0 0 0;
-     0 0 0 0 0 0 0 0 -kdrag/m 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0;
-     0 0 0 0 0 0 0 0 0 0 0 0];
-
-%%% Attached Payload Addition %%%
-% mpayload = 0.5; % payload mass (kg)
-% plarm = l/2; % payload moment arm (m)
+% %% Drone Dynamic Modeling
+% 
+% %%% Constant Parameters %%%
+% dt = 0.001; % sample time (s)
+% m = 1.45; % uav mass (kg)
+% mpayload = 0; % payload mass (kg)
+% plarm = 0; % payload moment arm (m)
+% k = 120; % propeller thrust to speed gain
+% l = 0.2; % propeller moment arm (m)
+% kyaw = 0.5; % propeller torque to speed constant
+% alpha = 1; % reliability adaptation rate
+% g = 9.87; % acceleration due to gravity (m/s2)
+% Jxx = 0.03; % moment of inertia about x-axis
+% Jyy = 0.03; % moment of inertia about y-axis
+% Jzz = 0.04; % moment of inertia about z-axis
+% kdrag = 5; % drag coefficient (assumed to be the same for all planes)
+% 
+% %%% Offset CG model %%%
+% cgoffset = l/2; % CG offset from geometric centre in the -z direction (m)
+% % A = [0 0 0 0 0 0 1 0 0 0 0 0; % state matrix
+% %      0 0 0 0 0 0 0 1 0 0 0 0;
+% %      0 0 0 0 0 0 0 0 1 0 0 0;
+% %      0 0 0 0 0 0 0 0 0 1 0 0;
+% %      0 0 0 0 0 0 0 0 0 0 1 0;
+% %      0 0 0 0 0 0 0 0 0 0 0 1;
+% %      0 0 0 g 0 0 0 0 0 0 0 0;
+% %      0 0 0 0 -g 0 0 0 0 0 0 0;
+% %      0 0 0 0 0 0 0 0 0 0 0 0;
+% %      0 0 0 -m*g*cgoffset/Jyy 0 0 0 0 0 0 0 0;
+% %      0 0 0 0 -m*g*cgoffset/Jxx 0 0 0 0 0 0 0;
+% %      0 0 0 0 0 0 0 0 0 0 0 0];
+% %B = [0 0 0 0; % control matrix for controllable variables
+% %     0 0 0 0;
+% %     0 0 0 0;
+% %     0 0 0 0;
+% %     0 0 0 0;
+% %     0 0 0 0;
+% %     0 0 0 0;
+% %     0 0 0 0;
+%  %    1/m 0 0 0;
+%  %    0 1/Jyy 0 0;
+%  %    0 0 1/Jxx 0;
+%  %    0 0 0 1/Jzz];
+% C = [0 0 0 0 0 0 1 0 0 0 0 0; % output matrix
+%      0 0 0 0 0 0 0 1 0 0 0 0;
+%      0 0 0 0 0 0 0 0 1 0 0 0;
+%      0 0 0 0 0 0 0 0 0 1 0 0;
+%      0 0 0 0 0 0 0 0 0 0 1 0;
+%      0 0 0 0 0 0 0 0 0 0 0 1];
+% D = zeros(6,8); % output control matrix
+% 
+% %%% Drag Addition %%%
+% A = A + [0 0 0 0 0 0 0 0 0 0 0 0;
+%      0 0 0 0 0 0 0 0 0 0 0 0;
+%      0 0 0 0 0 0 0 0 0 0 0 0;
+%      0 0 0 0 0 0 0 0 0 0 0 0;
+%      0 0 0 0 0 0 0 0 0 0 0 0;
+%      0 0 0 0 0 0 0 0 0 0 0 0;
+%      0 0 0 0 0 0 -kdrag/m 0 0 0 0 0;
+%      0 0 0 0 0 0 0 -kdrag/m 0 0 0 0;
+%      0 0 0 0 0 0 0 0 -kdrag/m 0 0 0;
+%      0 0 0 0 0 0 0 0 0 0 0 0;
+%      0 0 0 0 0 0 0 0 0 0 0 0;
+%      0 0 0 0 0 0 0 0 0 0 0 0];
+% 
+% %%% Attached Payload Addition %%%
+% % mpayload = 0.5; % payload mass (kg)
+% % plarm = l/2; % payload moment arm (m)
  
 %% Drone Controller Design
 % Controllability check
-Cx = ctrb(A,B); % Controllability Matrix:
-check1 = rank(Cx);
-if check1 == size(Cx,1)
-    disp('System is controllable')
-elseif check1 < size(Cx,1)
-    disp('System is uncontrollable')
-end
+% Cx = ctrb(A,B); % Controllability Matrix:
+% check1 = rank(Cx);
+% if check1 == size(Cx,1)
+%     disp('System is controllable')
+% elseif check1 < size(Cx,1)
+%     disp('System is uncontrollable')
+% end
 
 % Desired response parameters
 ts_c = 0.5; % settling time [s]
@@ -104,12 +104,12 @@ Pdes_c = [p_c' p_c' p_c'*1.001 p_c'*1.001 p_c'*1.002 p_c'*1.002];
 % Kr = ([K eye(size(K,1),(size([A';B'],1)-size(K,2)))]/statematrix)*[zeros(size([A' C'],1),6);eye(size(C',2),6)];
 
 %% Drone Kinematics Modeling
-thrust2inp = [1 1 1 1 1 1 1 1; % control effectiveness matrix
-              l -l 0 0 l -l 0 0;
-              0 0 l -l 0 0 l -l;
-              kyaw kyaw -kyaw -kyaw kyaw kyaw -kyaw -kyaw];
-inp2thrust = pinv(thrust2inp); % control effectiveness matrix inverse
-Bcnt = B*thrust2inp; % control matrix for operable control (motors)
+%thrust2inp = [1 1 1 1 1 1 1 1; % control effectiveness matrix
+%              l -l 0 0 l -l 0 0;
+%              0 0 l -l 0 0 l -l;
+%             kyaw kyaw -kyaw -kyaw kyaw kyaw -kyaw -kyaw];
+%inp2thrust = pinv(thrust2inp); % control effectiveness matrix inverse
+%Bcnt = B*thrust2inp; % control matrix for operable control (motors)
 
 %% Drone Propeller Modeling Parameters
 %%% Atmospheric Conditions %%%
@@ -255,30 +255,30 @@ In_SOC_Bat2 = 1;
 
 %Reliability Observer (CAPEV)
 
-CAPEV_Motor1 = 0.5;
-CAPEV_Motor2 = 0.5;
-CAPEV_Motor3 = 0.5;
-CAPEV_Motor4 = 0.5;
-CAPEV_Motor5 = 0.5;
-CAPEV_Motor6 = 0.5;
+CAPEV_Motor1 = 1;
+CAPEV_Motor2 = 1;
+CAPEV_Motor3 = 1;
+CAPEV_Motor4 = 1;
+CAPEV_Motor5 = 1;
+CAPEV_Motor6 = 1;
 
 %Reliability Observer (SCTDDB)
 
-SCTDDB_Motor1 = 0.5;
-SCTDDB_Motor2 = 0.5;
-SCTDDB_Motor3 = 0.5;
-SCTDDB_Motor4 = 0.5;
-SCTDDB_Motor5 = 0.5;
-SCTDDB_Motor6 = 0.5;
+SCTDDB_Motor1 = 1;
+SCTDDB_Motor2 = 1;
+SCTDDB_Motor3 = 1;
+SCTDDB_Motor4 = 1;
+SCTDDB_Motor5 = 1;
+SCTDDB_Motor6 = 1;
 
 %Reliability Observer (SCEM)
 
-SCEM_Motor1 = 1;
-SCEM_Motor2 = 1;
-SCEM_Motor3 = 1;
-SCEM_Motor4 = 1;
-SCEM_Motor5 = 1;
-SCEM_Motor6 = 1;
+%SCEM_Motor1 = 1;
+%SCEM_Motor2 = 1;
+%SCEM_Motor3 = 1;
+%SCEM_Motor4 = 1;
+%SCEM_Motor5 = 1;
+%SCEM_Motor6 = 1;
 
 %Reliability Observer (WDG)
 
