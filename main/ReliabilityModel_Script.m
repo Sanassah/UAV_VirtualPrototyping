@@ -255,7 +255,7 @@ In_SOC_Bat2 = 1;
 
 %Reliability Observer (CAPEV)
 
-CAPEV_Motor1 = 1;
+CAPEV_Motor1 = 0.8;
 CAPEV_Motor2 = 1;
 CAPEV_Motor3 = 1;
 CAPEV_Motor4 = 1;
@@ -264,7 +264,7 @@ CAPEV_Motor6 = 1;
 
 %Reliability Observer (SCTDDB)
 
-SCTDDB_Motor1 = 1;
+SCTDDB_Motor1 = 0.8;
 SCTDDB_Motor2 = 1;
 SCTDDB_Motor3 = 1;
 SCTDDB_Motor4 = 1;
@@ -282,7 +282,7 @@ SCTDDB_Motor6 = 1;
 
 %Reliability Observer (WDG)
 
-WDG_Motor1 = 1;
+WDG_Motor1 = 0.8;
 WDG_Motor2 = 1;
 WDG_Motor3 = 1;
 WDG_Motor4 = 1;
@@ -291,7 +291,7 @@ WDG_Motor6 = 1;
 
 %Reliability Observer (BNG)
 
-BNG_Motor1 = 1;
+BNG_Motor1 = 0.8;
 BNG_Motor2 = 1;
 BNG_Motor3 = 1;
 BNG_Motor4 = 1;
