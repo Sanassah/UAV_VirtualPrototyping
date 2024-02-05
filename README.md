@@ -18,10 +18,8 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 ![Drone_Simulation](https://github.com/Sanassah/UAV_VirtualPrototyping/assets/89364990/01042729-8d4d-4604-b1e1-b74a2f55a672)
 
 
-
-https://github.com/Sanassah/UAV_VirtualPrototyping/assets/89364990/6c7dd01e-c33e-4f21-af80-a655bb5e276c
-
-
+![IMG_0 (1)](https://github.com/Sanassah/UAV_VirtualPrototyping/assets/89364990/d6828937-239a-4580-ba77-0a7cb60ae23a)
+Flight test of physical twin with custom made control laws integrated to the pixhawk 4 flight controller through the px4 support package of matlab.
 
 ## Getting Started
 
