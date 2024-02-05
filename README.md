@@ -6,6 +6,7 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 
 ## Features
 
+
 - Custom Hexacopter Plant: The simulation includes a detailed and customizable hexacopter plant model that takes into account the dynamics and characteristics of a real hexacopter. You can tweak the parameters to match your specific hexacopter configuration.
 
 - Control Allocation: The project incorporates a control allocation algorithm that efficiently distributes control commands to the individual actuators of the hexacopter. This allows for precise control and maneuverability.
@@ -15,6 +16,12 @@ This repository contains a comprehensive hexacopter simulation implemented in MA
 - Reliability Model: Allows a different distribution of power to each motor depending on their health.
 
 ![Drone_Simulation](https://github.com/Sanassah/UAV_VirtualPrototyping/assets/89364990/01042729-8d4d-4604-b1e1-b74a2f55a672)
+
+
+
+https://github.com/Sanassah/UAV_VirtualPrototyping/assets/89364990/6c7dd01e-c33e-4f21-af80-a655bb5e276c
+
+
 
 ## Getting Started
 
